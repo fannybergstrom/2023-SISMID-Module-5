@@ -1,0 +1,6 @@
+"0","options(width = 120)"
+"0","# Libraries"
+"0","if (!require(""pacman"")) install.packages(""pacman"")"
+"0","pacman::p_load("
+"0","  tidyverse, gridExtra, pbapply, deSolve, RColorBrewer"
+"0",")"
