@@ -37,10 +37,10 @@ Assume that a large outbreak occurs in a homogeneously mixing population.
 ################
 ## first write the estimated R_0 as a function of the final size tau
 R0 <- function(tau) {
-  -log(1 - tau) / tau
+  ...
 }
 ## compute the estimated value of R_0 when r=0.2
-R0_hat <- R0(tau = 0.2)
+R0_hat <- ...
 R0_hat
 ```
 (b) Suppose now there were a fraction $30\%$ of initially immune. Estimate $R_0$ in this case.
@@ -60,11 +60,11 @@ R0_immune <- function(tau) {
 tau_overall <- 0.2
 
 ## compute the estimated value of R_0
-R0_hat <- R0_immune(tau = tau_overall / (1 - r))
+R0_hat <- R0_immune(tau = ...)
 R0_hat
 ```
 
-# Exercise 2.2 ( Least-squares Fit the SIR model)
+# Exercise 2.2 (Least-squares Fit the SIR model)
 
 (a) First define the log-likelihood function.
 ```{r echo=TRUE, message=FALSE, warning=FALSE}
@@ -99,11 +99,11 @@ R0_hat <- -log(1 - f_size) / f_size
 ## construct a deterministic SIR Model as same in exercise 2.1
 
 deter_sir <- function(t, y, parms) {
-  beta <- parms[1]
-  gamma <- parms[2]
-  S <- y[1]
-  I <- y[2]
-  return(list(c(S = -beta / N * S * I, I = beta / N * S * I - gamma * I)))
+  beta <- ...
+  gamma <- ...
+  S <- ...
+  I <- ...
+  return(list(c(S = -beta / N * S * I, I = ...)))
 }
 
 ##  create a log-likelihood function of theta
@@ -117,7 +117,7 @@ ll.gauss <- function(theta) {
     parms = exp(theta)
   ) # note here parms = e^(theta)
 
-  return(sum(dnorm(covid_df$I, # the observed number of infected case
+  return(sum(dnorm(..., # the observed number of infected case
     mean = res[, 3], # the solution from the deterministic sir
     sd = 1, # the fixed variance of observation noise is 1
     log = TRUE
@@ -130,18 +130,18 @@ ll.gauss <- function(theta) {
 # YOUR CODE Please fill in the blank spaces###
 ################################################
 # Determine MLE
-mle <- optim(log(c(1, 3)), # initial values for theta to be optimized over, e.g. log3
+mle <- optim(..., # initial values for theta to be optimized over, e.g. log3
   fn = ll.gauss, # our function,
   control = list(fnscale = -1) ## maximize the function
 )
 # Show parameter estimates
-beta.hat <- exp(mle$par)[1]
+beta.hat <- ...
 beta.hat
-gamma.hat <- exp(mle$par)[2]
+gamma.hat <- ...
 gamma.hat
 
 # and resulting R0 estimate
-R0.hat <- beta.hat / gamma.hat
+R0.hat <- ...
 
 R0.hat
 ```
@@ -157,8 +157,8 @@ And plot the fitted curve and the real data of COVID-19 outbreak together. Does 
 mu <- lsoda(
   y = c(N - covid_df$I[1], covid_df$I[1]), # initial condition
   times = covid_df$t,
-  func = deter_sir,
-  parms = exp(mle$par)
+  func = ...,
+  parms = exp(...)
 ) # parameters take the the values of MLE from part b
 
 ## plot the fitted curve and the real data of covid outbreak
@@ -168,7 +168,7 @@ matplot(mu[, 1], # time
   ylab = "Number of new infectiion",
   xlab = "Time (days after first infection)", col = c(2, 3)
 )
-legend(x = "topright", c("COVID outbreak", "LS fit"), lty = 1, col = c(2, 3), lwd = 3)
+legend(x = "topright", c("COVID-19 outbreak", "LS fit"), lty = 1, col = c(2, 3), lwd = 3)
 ```
 
 ## Exercise 2.3 ( Least-squares Fit the SEIR model)
@@ -193,15 +193,15 @@ I0 <- ts$Incidence[1] %>% round() # number of initial infectives
 
 seir_change <- function(t, y, parms) {
   beta0 <- parms[1]
-  beta1 <- parms[2]
-  t1 <- parms[3]
-  w <- parms[4]
+  beta1 <- ...
+  t1 <- ...
+  w <- ...
   rho <- 1 / 5
-  gamma <- parms[5]
+  gamma <- ...
 
   S <- y[1]
-  E <- y[2]
-  I <- y[3]
+  E <- ...
+  I <- ...
 
   # time-dependent rate \beta(t):
 
@@ -212,8 +212,9 @@ seir_change <- function(t, y, parms) {
   }
 
   return(list(c(
-    S = -beta(t) / N * S * I, E = beta(t) / N * S * I - rho * E,
-    I = rho * E - gamma * I
+    S = -beta(t) / N * S * I, 
+    E = ...
+    I = ... 
   )))
 }
 ```
@@ -241,13 +242,13 @@ ll.sq <- function(theta, I0) {
 
 
   res <- lsoda(
-    y = c(N - I0, I0, I0),
+    y = c(..., ..., ...),
     times = ts$t,
-    func = seir_change,
-    parms = exp(theta)
+    func = ...,
+    parms = exp(...)
   )
 
-  return(sum((ts$Incidence - res[, 3])^2))
+  return(sum((... - res[, 3])^2))
 }
 ```
 
@@ -262,7 +263,7 @@ ll.sq <- function(theta, I0) {
 # YOUR CODE Please fill in the blank spaces###
 ################################################
 ##  Set starting values: (beta_0,beta_1, t_1, w,gamma)
-theta0 <- c(0.07, 0.02, 3, 23, 0.2)
+theta0 <- c(..., ..., ..., ..., ...)
 
 
 ##
@@ -282,8 +283,8 @@ mu <- lsoda(
 )
 
 # plot the observed and fitted curve with estimated theta
-matplot(mu[, 1], # time
-  cbind(ts$Incidence, mu[, 3]), # cbind(incidence data, fitted value mu)
+matplot(..., # time
+  cbind(..., ...), # cbind(incidence data, fitted value mu)
   type = "l", lwd = 2, lty = 1,
   ylab = "Reported cases",
   xlab = "Time"

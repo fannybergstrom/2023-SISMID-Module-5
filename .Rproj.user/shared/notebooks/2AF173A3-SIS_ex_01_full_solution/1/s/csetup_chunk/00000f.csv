@@ -1,5 +1,0 @@
-"0","knitr::opts_chunk$set("
-"0","  fig.path = ""./figs/ex01-"", results = ""markup"", error = FALSE, fig.width = 8, "
-"0","  fig.height = 4.5, size = ""small"", echo = TRUE, tidy = FALSE, message = FALSE, "
-"0","  fig.keep = ""high"", fig.align = ""center"", warning = FALSE"
-"0",")"

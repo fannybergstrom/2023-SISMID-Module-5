@@ -1,2 +1,0 @@
-"0","legend(x = ""topright"", paste(""beta="", sprintf(""%.2f"", beta.grid), sep = """"), "
-"0","       lty = 1, lwd = 2, col = pal)"

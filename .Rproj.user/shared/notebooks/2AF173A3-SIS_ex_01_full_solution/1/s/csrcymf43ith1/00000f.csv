@@ -1,8 +1,0 @@
-"0",""
-"0","##############################################"
-"0","# YOUR CODE HERE"
-"0","##############################################"
-"0",""
-"0","# simply use the functions plot(...), lines(...)"
-"0","plot(time, sol_SIRchange[, 3], type = ""l"", lwd = 2, col = 2, "
-"0","     xlab = ""Time"", ylab = ""I(t)"", xlim = c(0, 100), ylim = c(0, N))"

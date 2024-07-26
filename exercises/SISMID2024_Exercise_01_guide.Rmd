@@ -39,10 +39,9 @@ pacman::p_load(
 
 tau <- function(R_0) {
   final_eq <- function(tau) {
-    ##########################
-    # give the expression here
-    ##########################
-    1 - tau - exp(-R_0 * tau)
+        ##########################
+    ... # give the expression here
+        ##########################
   }
   "
   Note: This final size equation is always a solution tau = 0.
@@ -52,8 +51,9 @@ tau <- function(R_0) {
   result1 <- uniroot(final_eq, lower = 0, upper = 1)$root
   result2 <- uniroot(final_eq, lower = 1e-12, upper = 1, extendInt = "yes")$root
 
-  # fill in here (minimum or maximum of result1 and 2 or others?)
-  result <- max(result1, result2)
+                ########################################################
+  result <- ... # fill in here (minimum or maximum of result1 and 2 or others?)
+                ########################################################
 
   return(result)
 }
@@ -75,10 +75,9 @@ R0_vec <- seq(from = 0, to = 5, length.out = 10000)
 tau_vec <- as.vector(10000)
 for (i in 1:10000) {
   R0 <- R0_vec[i]
-  ########################################################
-  # fill in here (use the previous function tau(...) )
-  tau_vec[i] <- tau(R_0 = R0)
-  ########################################################
+                    ########################################################
+  tau_vec[i] <- ... # fill in here (use the previous function tau(...) )
+                    ########################################################
 }
 
 # Create a plot of tau against R0
@@ -102,11 +101,10 @@ ggplot(mapping = aes(x = R0_vec, y = tau_vec)) +
 ##############################################################################
 tau_overall <- function(R_0, r) {
   final_eq <- function(tau) {
-    ##########################
-    #    YOUR CODE HERE      
-    ##########################
-    # give the equation
-    1 - tau - exp(-R_0 * (1 - r) * tau)
+        ########################################
+    ... #    YOUR CODE HERE, give the equation      
+        ########################################
+     
   }
   "
   Note: This final size equation only gives the fraction infected among
@@ -115,20 +113,19 @@ tau_overall <- function(R_0, r) {
   result1 <- uniroot(final_eq, lower = 0, upper = 1)$root
   result2 <- uniroot(final_eq, lower = 1e-12, upper = 1, extendInt = "yes")$root
 
-  ####################################################
-  # fill in here (minimum or maximum or others?)
-  ####################################################
-  result <- max(result1, result2)
+                ####################################################
+  result <- ... # fill in here (minimum or maximum or others?)
+                ####################################################
 
   "
   Note: this result is the final size among initially susceptibles.
   then what is the overall fraction infected?
   "
-  ######################################################################
-  # fill in here (here we want the OVERALL fraction infected!)
-  ######################################################################
 
-  return(result * (1 - r))
+  
+                ##############################################################
+  return( ... ) # fill in here (here we want the OVERALL fraction infected!)
+                ##############################################################
 }
 ```
 
@@ -159,6 +156,7 @@ for (i in 1:10000) {
   R0 <- R0_vec[i]
   tau_vec[i] <- tau_overall(R_0 = R0, r = r)
 }
+
 df_tau_r <- cbind(df_tau_r, overall_infected.5 = tau_vec)
 
 ##########################
@@ -168,14 +166,7 @@ df_tau_r <- cbind(df_tau_r, overall_infected.5 = tau_vec)
 # values of tau for r = 0.7, and consider it as the column in the data frame 
 # "df_tau_r" , with name "overall_infected.7".
 
-# Create a vector of the corresponding values of tau for r = 0.7
-tau_vec <- as.vector(10000)
-r <- 0.7
-for (i in 1:10000) {
-  R0 <- R0_vec[i]
-  tau_vec[i] <- tau_overall(R_0 = R0, r = r)
-}
-df_tau_r <- cbind(df_tau_r, overall_infected.7 = tau_vec)
+... # Vector of the corresponding values of tau for r = 0.7
 
 # Create a plot of tau against R0 in three cases
 ggplot(df_tau_r) +
@@ -186,7 +177,8 @@ ggplot(df_tau_r) +
   labs(title = " Assuming there is a fraction r of initially immune") +
   ylab("Overall fraction infected") +
   xlab(expression("R"[0])) +
-  ylim(0, 1) + theme_minimal()
+  ylim(0, 1) + 
+  theme_minimal()
 ```
 
 # Exercise 1.2 (Determinstic and stochastic SIR Model)
@@ -227,7 +219,6 @@ deter_sir <- function(t, y, parms) {
     # YOUR CODE HERE
     ##########################
     # same for dI(t)/dt
-    I = beta / N * S * I - gamma * I
   )))
 }
 ```
@@ -241,10 +232,10 @@ Solve the SIR differential equation system with initial conditions: $S(0)=N-1, I
 # using lsoda(..) function
 
 sim <- lsoda(
-  y = c(10000 - 1, 1), # initial conditions for S ans I
+  y = c(... , ...), # initial conditions for S ans I
   times = times, # times at which explicit estimates for y are desired
-  func = deter_sir, # function computing values of derivatives in the ODE
-  parms = c(beta, gamma, N = 10000) # vector/list of parameters used in function
+  func = ..., # function computing values of derivatives in the ODE
+  parms = c(..., ...., N = ...) # vector/list of parameters used in function
 )
 ```
 
@@ -257,12 +248,7 @@ Plot the curves of $I(t)$ and $S(t)$ over time:
 ##############################################
 
 # simply use the function plot(...)
-plot(times, sim[, 3], type = "l", lwd = 2, 
-     col = 2, xlab = "time", ylab = "", 
-     xlim = c(0, 100), ylim = c(0, 10000))
-lines(times, sim[, 2], col = 3)
-legend(x = "topright", c("I(t)", "S(t)"), col = c(2, 3), lty = 1)
-title("Plot of I(t) and S(t) ")
+
 ```
 
 (b) Now fix $\gamma=0.25,$ but choose different values of $\beta=1, 0.75$ and $0.25.$ In each case, solve the SIR differential equation system with initial condition $(S(0)=N-1, I(0)=1)$. Plot the curves of $I(t)$ and compare them.  
@@ -279,8 +265,6 @@ I <- sapply(
     # YOUR CODE HERE, fill in the blank space
     ##############################################
     # again, using lsoda(..) function solve the ODE, compute the I(t)
-    lsoda(y = c(10000 - 1, 1), times = times, func = deter_sir, 
-          parms = c(beta, gamma, N = 10000))[, 3]
   }
 )
 
@@ -317,15 +301,15 @@ sir_change <- function(t, y, parms) {
   # create a time-dependent rate \beta(t) as function of t
 
   beta <- function(t) {
-    ifelse(t <= t1, beta0, ifelse(t > t2, beta2,
-      beta1
+    ifelse(t <= t1, ..., ifelse(... > ..., ...,
+      ...
     ))
   }
 
-  return(list(c(
-    S = -beta(t) / N * S * I, # list containing dS(t)/dt
-    I = beta(t) / N * S * I - gamma * I
-  ))) # and dI(t)/dt
+  return(list(c( 
+    S = ..., 
+    I = ...
+  ))) # # list containing dS(t)/dt and dI(t)/dt
 }
 
 # set the paramter values
@@ -347,10 +331,10 @@ time <- seq(0, 100, length = 1000)
 ##############################################
 
 sol_SIRchange <- lsoda(
-  y = c(N - 1, 1), # initial conditions for S ans I
+  y = ..., # initial conditions for S ans I
   times = time, # times at which explicit estimates for y are desired
-  func = sir_change, # function computing the values of derivatives in the ODE
-  parms = c(beta0, beta1, beta2, t1, t2, gamma) # vector/list of parameters
+  func = ..., # function computing the values of derivatives in the ODE
+  parms = c(..., ..., ..., ..., ..., ...) # vector/list of parameters
 )
 ```
 
@@ -362,9 +346,9 @@ Plot the curves of $I(t)$ for fixed beta and time-dependent beta.
 ##############################################
 
 # simply use the functions plot(...), lines(...)
-plot(time, sol_SIRchange[, 3], type = "l", lwd = 2, col = 2, 
+plot(...,
      xlab = "Time", ylab = "I(t)", xlim = c(0, 100), ylim = c(0, N))
-lines(times, sim[, 3], col = 3)
+lines(... )
 legend(x = "topright", c("fixed beta", 
                          "time-dependent beta"), col = c(3, 2), lty = 1)
 title("Plot of I(t) in SIR model with fixed and time-dependent")
@@ -402,7 +386,7 @@ stoch_SIR <- function(T, beta, gamma, n, m, N) {
     # Draw the waiting type for each possible event
 
     wait <- rexp(2, c(
-      "S->I" = beta / N * x * y, # here insert the rate for "S->I"
+      "S->I" = ... # here insert the rate for "S->I"
       "I->R" = gamma * y # the rate for "I->R"
     ))
     "
@@ -414,7 +398,7 @@ stoch_SIR <- function(T, beta, gamma, n, m, N) {
     # i.e. the event with the smaller or bigger random number?
     # which.min(wait) or which.max(wait)?
 
-    i <- which.min(wait)
+    i <- ...
 
     # Record Event Time
     t <- t + wait[i]
@@ -424,15 +408,15 @@ stoch_SIR <- function(T, beta, gamma, n, m, N) {
     if (eventLevels[i] == "S->I") {
       x <- x - 1  # the number of S will decrease by 1.
       # what happen to y, z?
-      y <- y + 1
+      y <- ...
 
-      z <- z + 1
+      z <- ...
     }
     # if an recovery occurs,
     if (eventLevels[i] == "I->R") {
 
       # what happen to x, y, z?
-      y <- y - 1
+      y <- ...
     }
     # Store result
     df_SIR <- rbind(df_SIR, c(t, x, y, z, i))
@@ -460,8 +444,7 @@ c <- 0.1 # initial infectious fraction
 compare_DS <- function(N) {
 
   # do one simulated stochastic epidemic
-  traj <- stoch_SIR(T = Tmax, beta = beta, gamma = gamma,
-                    n = N * (1 - c), m = N * c, N = N)
+  traj <- stoch_SIR(...)
 
   # plot the stochastic curve of I
   plot(traj$t, traj$y,
@@ -492,19 +475,9 @@ legend(x = "topright", c("stochastic", "deterministic"),
 title("Stochastic vs. Deterministic when size of population = 100")
 
 ####################################################################
-# YOUR CODE HERE,do the same for the other two cases  N=1000, 10000
+# YOUR CODE HERE, do the same for the other two cases  N=1000, 10000
 ####################################################################
-set.seed(123)
-compare_DS(N = 1000)
-legend(x = "topright", c("stochastic", "deterministic"), 
-       col = c(1, 2), lty = 1, lwd = 2)
-title("Stochastic vs. Deterministic when size of population = 1000")
 
-set.seed(123)
-compare_DS(N = 10000)
-legend(x = "topright", c("stochastic", "deterministic"), 
-       col = c(1, 2), lty = 1, lwd = 2)
-title("Stochastic vs. Deterministic when size of population = 10000")
 ```
 
 
@@ -537,17 +510,17 @@ fsize_SIR <- function(T, beta, gamma, n, m, N) {
     # Draw the waiting type for each possible event
     wait <- rexp(2, c("S->I" = beta / N * x * y, "I->R" = gamma * y))
     # Determine which event occurs first
-    i <- which.min(wait)
+    i <- ...
     # Record Event Time
-    t <- t + wait[i]
+    t <- ...
     # Update the number of S and I according to the event type
     if (eventLevels[i] == "S->I") {
-      x <- x - 1
-      y <- y + 1
-      z <- z + 1
+      x <- ...
+      y <- ...
+      z <- ...
     } # if infection
     if (eventLevels[i] == "I->R") {
-      y <- y - 1
+      y <- ...
     } # if recovery
   }
   return(z) # return the number of recovered
@@ -561,10 +534,10 @@ Do 5000 simulations with different size of community N.
 # YOUR CODE, fill in the blank space
 ##############################################
 # set parameter values:
-beta <- 0.375
-gamma <- 0.25
+beta <- ...
+gamma <- ...
 Tmax <- 500 # time limit [0,500]
-I0 <- 1
+I0 <- ...
 nSim <- 5000 # number of simulations
 
 compare_hist <- function(N) {
@@ -598,15 +571,7 @@ hist(compare_hist(N = 500),
 # YOUR CODE
 ##############################################
 # do the other two cases: N = 1000 and 5000
-hist(compare_hist(N = 1000),
-  breaks = 50, main = "Histogram of final size when N=1000",
-  xlab = "", xlim = c(0, 1000), ylim = c(0, 5000)
-)
 
-hist(compare_hist(N = 5000),
-  breaks = 45, main = "Histogram of final size when N=5000",
-  xlab = "", xlim = c(0, 5000), ylim = c(0, 5000)
-)
 ```
 
 
@@ -631,16 +596,15 @@ hist(compare_hist(N = 5000),
 ##############################################################################
 
 seir <- function(t, y, parms, N) {
-  beta <- parms[1]
-  rho <- parms[2]
-  gamma <- parms[3]
-  N <- parms[4]
+  beta <- ...
+  rho <- ...
+  gamma <- ...
+  N <- ...
 
-  S <- y[1]
-  E <- y[2]
-  I <- y[3]
-  return(list(c(S = -beta / N * S * I, E = beta / N * S * I - rho * E, 
-                I = rho * E - gamma * I)))
+  S <- ...
+  E <- ...
+  I <- ...
+  return(list(c(S = ..., E = ..., I = ...)))
 }
 
 
@@ -702,14 +666,10 @@ seir_change <- function(t, y, parms, N) {
 
   # write the time-dependent rate \beta(t) using ifelse(,)
 
-  beta <- function(t) {
-    ifelse(t <= t1 - w, beta0, ifelse(t > t1 + w, beta1,
-      beta0 + (beta1 - beta0) / (2 * w) * (t - (t1 - w))
-    ))
+  beta <- function(t) {...
   }
   # write the return list containing dS(t)/dt, dE(t)/dt, and dI(t)/dt
-  return(list(c(S = -beta(t) / N * S * I, E = beta(t) / N * S * I - rho * E, 
-                I = rho * E - gamma * I)))
+  return(list(c(S = ..., ..., I = ...)))
 }
 # plot \beta(t):
 # plot(time, b, type="l",xlab="Time",ylab="beta(t)")
@@ -722,14 +682,14 @@ Take $t_1 = 30, w = 5, \beta_0 = 0.4$ and $\beta_1 = 0.12,$ solve the ODE system
 ##############################################
 # YOUR CODE HERE, fill in the blank space
 ##############################################
-# set the parameter values: such as
-beta0 <- 0.4
-beta1 <- 0.12
-t1 <- 30
-w <- 5
-gamma <- 1 / 7
-N <- 100
-I0 <- 1
+# set the parameter values: 
+beta0 <- ...
+beta1 <- ...
+t1 <- ...
+w <- ...
+gamma <- ...
+N <- ...
+I0 <- ...
 time <- seq(0, 100, length = 1000)
 
 # solve the ODE system for the changed SEIR model
@@ -745,8 +705,8 @@ plot(times, sol_SEIRchange[, 2],
   type = "l", lwd = 2, col = 1, xlab = "Time",
   ylab = "", xlim = c(0, 100), ylim = c(0, 100)
 )
-lines(times, sol_SEIRchange[, 3], col = 3)
-lines(times, sol_SEIRchange[, 4], col = 2)
+lines(..., ..., col = 3)
+lines(..., ..., col = 2)
 legend(x = "topright", c("S(t)", "E(t)", "I(t)"), col = c(1, 3, 2), lty = 1)
 title("Plot of S(t), E(t) and I(t) in SEIR model with time-dependent beta(t)")
 ```
@@ -784,14 +744,12 @@ stoch_SEIR <- function(T, n, m, parms, N) {
 
   # write the function for beta(t)
   beta <- function(t) {
-    ifelse(t <= t1 - w, beta0, ifelse(t > t1 + w, beta1,
-      beta0 + (beta1 - beta0) / (2 * w) * (t - (t1 - w))
-    ))
+    ...
   }
   # Initialize (x= number of S, y=number of I, z=number of E, t=event time)
-  x <- n
-  y <- m
-  z <- 0
+  x <- ...
+  y <- ...
+  z <- ...
   time <- 0
   # Possible events:
   eventLevels <- c("S->E", "E->I", "I->R")
@@ -800,9 +758,9 @@ stoch_SEIR <- function(T, n, m, parms, N) {
   # Loop until  time T or the epidemic stops(there is no infectives)
   while (time < T & (y > 0)) {
     # Draw the waiting type for each possible event
-    b <- beta(time)
-    wait <- rexp(3, c("S->E" = b / N * x * y, 
-                      "E->I" = rho * z, "I->R" = gamma * y))
+    b <- ...
+    wait <- rexp(3, c("S->E" = ..., 
+                      "E->I" = ...))
     # Determine which event occurs first
     i <- which.min(wait)
     # Record Event Time
@@ -852,8 +810,8 @@ compare_ds_seir <- function(N) {
   }
   # Do  stochastic simulations
   set.seed(123)
-  traj <- stoch_SEIR(T = 100, n = N * (1 - c), m = N * c, 
-                     parms = c(beta0, beta1, t1, w, gamma, rho, N))
+  traj <- stoch_SEIR(T = ..., n = ..., m = ..., 
+                     parms = c(..., ..., ..., ..., ..., ..., ...))
 
   # plot stochastic I(t)
 
@@ -865,10 +823,10 @@ compare_ds_seir <- function(N) {
   # Solve the deterministic ODE
 
   solution <- lsoda(
-    y = c(N * (1 - c), 0, N * c), times = seq(0, 100, length = 1000),
-    func = seir_change, parms = c(beta0, beta1, t1, w, gamma, N)
+    y = ..., times = seq(0, 100, length = 1000),
+    func = ..., parms = c(beta0, beta1, t1, w, gamma, N)
   )
-  lines(solution[, "time"], solution[, 4], col = 2, lwd = 2)
+  lines(solution[, "time"], ..., col = 2, lwd = 2)
   invisible()
 }
 ```
@@ -880,15 +838,8 @@ title("stochastic vs deterministic for SEIR model with beta(t) when N = 100")
 legend(x = "topright", c("stochastic", "deterministic"), 
        col = c(1, 2), lty = 1, lwd = 2)
 
+##############################################
+# YOUR CODE HERE
+##############################################
 # do the same for other two cases
-compare_ds_seir(N = 1000)
-title("stochastic vs deterministic for SEIR model with beta(t) when N = 1000")
-legend(x = "topright", c("stochastic", "deterministic"), 
-       col = c(1, 2), lty = 1, lwd = 2)
-
-
-compare_ds_seir(N = 10000)
-title("stochastic vs deterministic for SEIR model with beta(t) when N = 10000")
-legend(x = "topright", c("stochastic", "deterministic"), 
-       col = c(1, 2), lty = 1, lwd = 2)
 ```
