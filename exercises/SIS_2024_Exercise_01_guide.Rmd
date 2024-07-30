@@ -1,5 +1,5 @@
 ---
-title: "SISMID Exersice 1 -- Solution"
+title: "SISMID Exersice 1 -- Guide"
 author: "Fanny Bergström"
 date: '2024-07-29'
 output:
@@ -52,7 +52,7 @@ tau <- function(R_0) {
   result2 <- uniroot(final_eq, lower = 1e-12, upper = 1, extendInt = "yes")$root
 
                 ########################################################
-  result <- ... # fill in here (minimum or maximum of result1 and 2 or others?)
+  result <- ... # fill in here (minimum or maximum of result 1 and 2 or others?)
                 ########################################################
 
   return(result)

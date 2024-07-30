@@ -85,7 +85,7 @@ plot(covid_df$t, covid_df$I,
 )
 title("Observed data")
 
-# We see that the USA has approximately 331.9 mil inhabitants pig herds
+# We see that the USA has approximately 331.9 mil inhabitants
 # We assume 3.3 mil infected detected
 N <- 331.9 * 10^6
 sum_y <- sum(covid_df$New_cases)

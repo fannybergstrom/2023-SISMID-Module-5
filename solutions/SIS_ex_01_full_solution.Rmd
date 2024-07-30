@@ -292,6 +292,7 @@ matplot(times, I, type = "l", lwd = 2, lty = 1, col = pal,
 legend(x = "topright", paste("beta=", sprintf("%.2f", beta.grid), sep = ""), 
        lty = 1, lwd = 2, col = pal)
 title("Plot of I(t) for different beta")
+
 ```
 
 
